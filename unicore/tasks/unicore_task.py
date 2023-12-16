@@ -191,11 +191,11 @@ class UnicoreTask(object):
 
         assert isinstance(dataset, UnicoreDataset)
 
-        # initialize the dataset with the correct starting epoch
-        dataset.set_epoch(epoch)
-
-        # get indices ordered by example size
+        # initialize dataset w/ the correct starting epoch & get indices
         with data_utils.numpy_seed(seed):
+            # under random seed as some datasets do shuffling here
+            dataset.set_epoch(epoch)
+            # ordered by example size if not a shuffling dataset
             indices = dataset.ordered_indices()
 
         # create mini-batches with given size constraints
